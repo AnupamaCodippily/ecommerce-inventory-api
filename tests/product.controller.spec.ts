@@ -8,12 +8,19 @@ describe('ProductController', () => {
   let controller: ProductController;
   let service: IProductService;
 
+  const DUMMY_PRODUCT: Partial<IProduct> = {
+    "name": "Test Product",
+    "price": 123.33,
+    "stock": 3,
+    "sku": "prodtest1"
+  }
+
   const mockProductService: IProductService = {
-    getAllProducts: jest.fn(() => Promise.resolve([{ id: 1, name: 'Test Product' }])),
+    getAllProducts: jest.fn(() => Promise.resolve([DUMMY_PRODUCT])),
 
-    getProductById: jest.fn((id: number) => Promise.resolve({ id, name: 'Test Product' })),
+    getProductById: jest.fn((id: number) => Promise.resolve({ id: 1, name: 'Test Product' })),
 
-    createProduct: jest.fn((product: Partial<IProduct>) => Promise.resolve({ id: 1, ...product })),
+    createProduct: jest.fn((product: Partial<IProduct>) => Promise.resolve(DUMMY_PRODUCT)),
 
     updateProduct: jest.fn((id: number, updates: Partial<IProduct>) => Promise.resolve({ id, ...updates })),
 
@@ -48,7 +55,7 @@ describe('ProductController', () => {
   describe('findAll', () => {
     it('should return an array of products', async () => {
       const result = await controller.getAllProducts();
-      expect(result).toEqual([{ id: 1, name: 'Test Product' }]);
+      expect(result).toEqual([DUMMY_PRODUCT]);
       expect(service.getAllProducts).toHaveBeenCalled();
     });
   });
@@ -56,7 +63,7 @@ describe('ProductController', () => {
   describe('findById', () => {
     it('should return a single product', async () => {
       const result = await controller.findProductById(1);
-      expect(result).toEqual({ id: 1, name: 'Test Product' });
+      expect(result).toEqual(DUMMY_PRODUCT);
       expect(service.getProductById).toHaveBeenCalledWith(1);
     });
   });

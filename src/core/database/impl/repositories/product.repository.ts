@@ -24,7 +24,7 @@ export class ProductRepository implements IProductRepository {
         return this.repo.find();
     }
 
-    async create(product: Partial<Product>): Promise<Product | IDatabaseErrorResponse> {
+    async create(product: Product): Promise<Product | IDatabaseErrorResponse> {
         try {
             const newProduct = this.repo.create(product);
             return await this.repo.save(newProduct);

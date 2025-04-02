@@ -3,7 +3,7 @@ import IProduct from "@common/interfaces/product.interface";
 
 export interface IProductRepository {
   
-  create(product: Partial<IProduct>): Promise<IProduct| IDatabaseErrorResponse>;
+  create(product: IProduct): Promise<IProduct| IDatabaseErrorResponse>;
 
   findById(id: number): Promise<IProduct | null>;
 

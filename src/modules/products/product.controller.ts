@@ -16,11 +16,11 @@ export class ProductController {
 
     @Get(':id')
     findProductById(@Param('id') id: number) {
-        return this.productService.getAllProducts();
+        return this.productService.getProductById(id);
     }
 
     @Post()
-    createProduct( @Body() productData: Partial<IProduct>) {
+    createProduct(@Body() productData: IProduct) {
         this.productService.createProduct(productData);
     }
 
