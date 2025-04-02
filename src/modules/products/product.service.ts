@@ -1,11 +1,10 @@
 import { IProductRepository } from "@core/database/interfaces/product.repository.interface";
 import IProduct from "@common/interfaces/product.interface";
-import { Injectable } from "@nestjs/common";
-import { ProductRepository } from "@core/database/impl/repositories/product.repository";
+import { Inject, Injectable } from "@nestjs/common";
 
 @Injectable()
 export class ProductService {
-    constructor(private readonly productRepository: ProductRepository) {} 
+    constructor(@Inject('IProductRepository') private readonly productRepository: IProductRepository) {} 
 
     getAllProducts() {
         return this.productRepository.findAll();

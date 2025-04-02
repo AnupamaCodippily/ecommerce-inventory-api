@@ -13,9 +13,16 @@ import Product from './impl/entities/product.entity';
         database: 'inventory_db_dev',
         entities: [Product],
         synchronize: true,  // Set to true for development only
-      }), TypeOrmModule.forFeature([Product])]
-      ,
-    providers: [ProductRepository],
-    exports: [ProductRepository],
+      }), 
+      TypeOrmModule.forFeature([Product])
+       ],
+    providers: [{
+        provide: 'IProductRepository',
+        useClass: ProductRepository,
+    }],
+    exports: [{
+        provide: 'IProductRepository',
+        useClass: ProductRepository,
+    }],
 })
 export class DatabaseModule {}
