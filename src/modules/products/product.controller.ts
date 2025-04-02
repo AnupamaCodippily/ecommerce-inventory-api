@@ -1,6 +1,6 @@
 import IProduct from '@common/interfaces/product.interface';
 import { ProductService } from '@modules/products/product.service';
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller('product')
 export class ProductController {
@@ -14,18 +14,23 @@ export class ProductController {
         return this.productService.getAllProducts();
     }
 
+    @Get(':id')
+    findProductById(@Param('id') id: number) {
+        return this.productService.getAllProducts();
+    }
+
     @Post()
     createProduct( @Body() productData: Partial<IProduct>) {
         this.productService.createProduct(productData);
     }
 
     @Put(':id')
-    updateProduct() {
+    updateProduct(@Param() id: number, @Body() productData: Partial<IProduct>) {
         // Logic to update an existing product
     }
 
     @Delete(':id')
-    deleteProduct() {
+    deleteProduct(@Param('id') id: number) {
         // Logic to delete a product
     }
 
