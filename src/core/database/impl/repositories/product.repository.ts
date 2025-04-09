@@ -12,11 +12,16 @@ export class ProductRepository implements IProductRepository {
         private readonly repo: Repository<Product>,
     ) { }
 
-    async update(id: string, updates: Partial<Product>): Promise<Product> {
-        throw new Error('Method not implemented.');
+    async update(id: number, updates: Partial<Product>): Promise<Partial<Product>> {
+        const result = await this.repo.update({id}, updates);
+        if (result.affected === 0) {
+            throw new Error('Product not found');
+        }
+        
+        return updates;
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: number): Promise<void> {
         throw new Error('Method not implemented.');
     }
 

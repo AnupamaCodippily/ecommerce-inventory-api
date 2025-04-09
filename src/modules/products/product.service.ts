@@ -19,8 +19,9 @@ export class ProductService implements IProductService{
     }
 
     updateProduct(productId: number, productData: any): Promise<any> {
-        throw new Error("Method not implemented.");
+        return this.productRepository.update(productId, productData);
     }
+    
     deleteProduct(productId: number): Promise<any> {
         throw new Error("Method not implemented.");
     }

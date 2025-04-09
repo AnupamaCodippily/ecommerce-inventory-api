@@ -8,19 +8,23 @@ describe('ProductController', () => {
   let controller: ProductController;
   let service: IProductService;
 
-  const DUMMY_PRODUCT: Partial<IProduct> = {
-    "name": "Test Product",
-    "price": 123.33,
-    "stock": 3,
-    "sku": "prodtest1"
+  const DUMMY_PRODUCT: IProduct = {
+    name: "Test Product",
+    price: 123.33,
+    stock: 3,
+    sku: "prodtest1",
+    id: 1,
+    category: 'test category',
+    images: [],
+    tags: []
   }
 
   const mockProductService: IProductService = {
     getAllProducts: jest.fn(() => Promise.resolve([DUMMY_PRODUCT])),
 
-    getProductById: jest.fn((id: number) => Promise.resolve({ id: 1, name: 'Test Product' })),
+    getProductById: jest.fn((id: number) => Promise.resolve(DUMMY_PRODUCT)),
 
-    createProduct: jest.fn((product: Partial<IProduct>) => Promise.resolve(DUMMY_PRODUCT)),
+    createProduct: jest.fn((product: IProduct) => Promise.resolve({...product})),
 
     updateProduct: jest.fn((id: number, updates: Partial<IProduct>) => Promise.resolve({ id, ...updates })),
 
@@ -70,9 +74,10 @@ describe('ProductController', () => {
 
   describe('create', () => {
     it('should create and return a product', async () => {
-      const productData = { name: 'New Product', price: 100 };
+      const productData: IProduct = { ...DUMMY_PRODUCT, name: 'New Product', price: 100 };
       const result = await controller.createProduct(productData);
-      expect(result).toEqual({ id: 1, ...productData });
+      console.log(result);
+      expect(result).toEqual({ ...DUMMY_PRODUCT, name: 'New Product', price: 100 });
       expect(service.createProduct).toHaveBeenCalledWith(productData);
     });
   });
@@ -81,7 +86,7 @@ describe('ProductController', () => {
     it('should update and return the updated product', async () => {
       const updates = { name: 'Updated Product' };
       const result = await controller.updateProduct(1, updates);
-      expect(result).toEqual({ id: 1, ...updates });
+      expect(result).toEqual({id: 1, ...updates });
       expect(service.updateProduct).toHaveBeenCalledWith(1, updates);
     });
   });

@@ -7,9 +7,9 @@ export interface IProductRepository {
 
   findById(id: number): Promise<IProduct | null>;
 
-  update(id: string, updates: Partial<IProduct>): Promise<IProduct>;
+  update(id: number, updates: Partial<IProduct>): Promise<Partial<IProduct>>;
 
-  delete(id: string): Promise<void>;
+  delete(id: number): Promise<void>;
 
   findAll(): Promise<IProduct[]>;
 
